@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -48,6 +49,11 @@ public final class TestHuman implements Human {
     @Override
     public void authenticated(Runnable action) {
         this.userSession.ifValidDo(action);
+    }
+    
+    @Override
+    public <T> T authenticated(Supplier<T> supplier) {
+        return this.userSession.ifValidGet(supplier);
     }
     
     @Override

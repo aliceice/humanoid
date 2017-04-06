@@ -57,12 +57,16 @@ public final class TestHumanTest {
     public void authenticated() throws Exception {
         AtomicInteger counter = new AtomicInteger();
         
-        this.subject.authenticated(counter::incrementAndGet);
+        this.subject.authenticated((Runnable) counter::incrementAndGet);
         assertEquals(1, counter.get());
+        assertEquals(Integer.valueOf(2),
+                     this.subject.authenticated(counter::incrementAndGet));
         
+        this.subject.logOut();
         assertThrows(InvalidUserSession.class,
-                     () -> this.subject.logOut()
-                                       .authenticated(counter::incrementAndGet));
+                     () -> this.subject.authenticated((Runnable) counter::incrementAndGet));
+        assertThrows(InvalidUserSession.class,
+                     () -> this.subject.authenticated(counter::incrementAndGet));
     }
     
     private final TestHuman subject = new TestHuman();

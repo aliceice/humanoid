@@ -1,5 +1,7 @@
 package de.aliceice.humanoid;
 
+import java.util.function.Supplier;
+
 public interface Human {
     
     void greet(String greeting);
@@ -10,7 +12,9 @@ public interface Human {
     
     void anErrorOccurred(String error);
     
-    void decideWhatToDo(Action...actions);
+    void decideWhatToDo(Action... actions);
     
     void authenticated(Runnable action);
+    
+    <T> T authenticated(Supplier<T> supplier);
 }
