@@ -1,0 +1,29 @@
+architect:
+  - aliceice
+
+decrypt:
+  settings.xml: "repo/settings.xml.asc"
+  pubring.gpg: "repo/pubring.gpg.asc"
+  secring.gpg: "repo/secring.gpg.asc"
+
+docker:
+  image: "maven:3.3.3-jdk-8"
+
+install: |-
+  java -version
+  mvn --version
+  mvn clean install -DskipTests
+
+merge:
+  script: |-
+    mvn clean verify -Pcode-quality
+  commanders:
+    - aliceice
+
+release:
+  script: |-
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Pcode-quality -Ppaper --settings /home/r/settings.xml
+  commanders:
+    - aliceice
