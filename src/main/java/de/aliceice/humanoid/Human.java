@@ -12,6 +12,12 @@ public interface Human {
     
     void anErrorOccurred(String error);
     
+    void hereYouGo(Response response);
+    
+    default void hereYouGo(String name, String response) {
+        hereYouGo(new StringResponse(name, response));
+    }
+    
     void decideWhatToDo(Action... actions);
     
     void authenticated(Runnable action);

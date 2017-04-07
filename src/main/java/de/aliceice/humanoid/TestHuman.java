@@ -3,14 +3,19 @@ package de.aliceice.humanoid;
 import de.aliceice.humanoid.sessions.InvalidUserSession;
 import de.aliceice.humanoid.sessions.UserSession;
 import de.aliceice.humanoid.sessions.ValidUserSession;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class TestHuman implements Human {
@@ -33,6 +38,11 @@ public final class TestHuman implements Human {
     @Override
     public void anErrorOccurred(String error) {
         this.receivedErrors.add(error);
+    }
+    
+    @Override
+    public void hereYouGo(Response response) {
+        this.receivedResponses.put(response.getName(), response);
     }
     
     @Override
@@ -62,10 +72,12 @@ public final class TestHuman implements Human {
                              "|%n" +
                              "| Received Info: %s%n" +
                              "| Received Errors: %s%n" +
+                             "| Received Responses: %s%n" +
                              "|%n" +
                              "-----------------------%n",
                              this.receivedInfo,
-                             this.receivedErrors);
+                             this.receivedErrors,
+                             this.receivedResponses);
     }
     
     public TestHuman wasGreeted() {
@@ -90,6 +102,15 @@ public final class TestHuman implements Human {
         return this;
     }
     
+    public TestHuman hasResponse(String name, String response) {
+        assertTrue(this.receivedResponses.containsKey(name),
+                   String.format("Did not receive response '%s'%n%s", name, this));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        this.receivedResponses.get(name).printOn(new PrintStream(out));
+        assertEquals(response, out.toString());
+        return this;
+    }
+    
     public TestHuman ifAskedDo(String... actionsToTake) {
         this.actionsToTake.addAll(Arrays.asList(actionsToTake));
         return this;
@@ -100,10 +121,11 @@ public final class TestHuman implements Human {
         return this;
     }
     
-    private Boolean            greeted        = false;
-    private Boolean            seenOff        = false;
-    private List<String>       receivedInfo   = new ArrayList<>();
-    private List<String>       receivedErrors = new ArrayList<>();
-    private LinkedList<String> actionsToTake  = new LinkedList<>();
-    private UserSession        userSession    = new ValidUserSession();
+    private Boolean               greeted           = false;
+    private Boolean               seenOff           = false;
+    private List<String>          receivedInfo      = new ArrayList<>();
+    private List<String>          receivedErrors    = new ArrayList<>();
+    private LinkedList<String>    actionsToTake     = new LinkedList<>();
+    private UserSession           userSession       = new ValidUserSession();
+    private Map<String, Response> receivedResponses = new HashMap<>();
 }

@@ -62,6 +62,7 @@
         <versions.build.maven-surefire-plugin>2.19</versions.build.maven-surefire-plugin>
         <versions.build.nexus-staging-maven-plugin>1.6.8</versions.build.nexus-staging-maven-plugin>
         <versions.build.versions-maven-plugin>2.1</versions.build.versions-maven-plugin>
+        <versions.dependencies.json>1.1.0-M1</versions.dependencies.json>
         <versions.dependencies.junit>5.0.0-M3</versions.dependencies.junit>
         <versions.java>1.8</versions.java>
     </properties>
@@ -73,6 +74,11 @@
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${versions.dependencies.junit}</version>
             </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.json</artifactId>
+                <version>${versions.dependencies.json}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -81,6 +87,10 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
         </dependency>
     </dependencies>
 

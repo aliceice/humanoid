@@ -36,6 +36,15 @@ public final class TestHumanTest {
     }
     
     @Test
+    public void hereYouGo() throws Exception {
+        this.subject.hereYouGo("endpoint", "http://www.google.de");
+        this.subject.hasResponse("endpoint", "http://www.google.de");
+        
+        this.subject.hereYouGo(new StringResponse("endpoint2", "http://www.google.de"));
+        this.subject.hasResponse("endpoint2", "http://www.google.de");
+    }
+    
+    @Test
     public void decideWhatToDo() throws Exception {
         AtomicInteger counter = new AtomicInteger();
         Action[] actions = {
