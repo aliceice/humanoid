@@ -1,11 +1,17 @@
 package de.aliceice.humanoid;
 
 import de.aliceice.humanoid.sessions.InvalidUserSession;
+import de.aliceice.paper.Field;
+import de.aliceice.paper.Fields;
+import de.aliceice.paper.Form;
+import de.aliceice.paper.MandatoryRule;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class TestHumanTest {
     
@@ -76,6 +82,30 @@ public final class TestHumanTest {
                      () -> this.subject.authenticated((Runnable) counter::incrementAndGet));
         assertThrows(InvalidUserSession.class,
                      () -> this.subject.authenticated(counter::incrementAndGet));
+    }
+    
+    @Test
+    public void fillOutAndSubmit() throws Exception {
+        AtomicBoolean wasSubmitted = new AtomicBoolean();
+        Form form = new Form("Test Form",
+                             new Fields(new Field("Field 1", new MandatoryRule()),
+                                        new Field("Field 2", new MandatoryRule())));
+        form.onSubmit(fields -> {
+            wasSubmitted.set(true);
+            assertEquals("Value 1", fields.get("Field 1"));
+            assertEquals("Value 2", fields.get("Field 2"));
+        });
+        
+        this.subject.takeNotes("Test Form",
+                               "Field 1: Value 1",
+                               "Field 2: Value 2");
+        this.subject.fillOutAndSubmit(form);
+        
+        assertTrue(wasSubmitted.get());
+        
+        Throwable exception = assertThrows(RuntimeException.class,
+                                           () -> this.subject.fillOutAndSubmit(new Form("Unknown", new Fields())));
+        assertEquals("I do not have notes for Form: Unknown", exception.getMessage());
     }
     
     private final TestHuman subject = new TestHuman();

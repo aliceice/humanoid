@@ -1,5 +1,6 @@
 package de.aliceice.humanoid;
 
+import de.aliceice.paper.Form;
 import java.util.function.Supplier;
 
 public interface Human {
@@ -23,4 +24,6 @@ public interface Human {
     void authenticated(Runnable action);
     
     <T> T authenticated(Supplier<T> supplier);
+    
+    void fillOutAndSubmit(Form form);
 }

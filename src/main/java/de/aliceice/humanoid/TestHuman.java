@@ -3,6 +3,7 @@ package de.aliceice.humanoid;
 import de.aliceice.humanoid.sessions.InvalidUserSession;
 import de.aliceice.humanoid.sessions.UserSession;
 import de.aliceice.humanoid.sessions.ValidUserSession;
+import de.aliceice.paper.Form;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -67,6 +68,17 @@ public final class TestHuman implements Human {
     }
     
     @Override
+    public void fillOutAndSubmit(Form form) {
+        Optional.ofNullable(this.notesByTitle.get(form.getName()))
+                .orElseThrow(() -> new RuntimeException("I do not have notes for Form: " + form.getName()))
+                .forEach(note -> {
+                    String[] noteElements = note.split(": ");
+                    form.write(noteElements[0], noteElements[1]);
+                });
+        form.submit();
+    }
+    
+    @Override
     public String toString() {
         return String.format("-----------------------%n" +
                              "|%n" +
@@ -121,11 +133,16 @@ public final class TestHuman implements Human {
         return this;
     }
     
-    private Boolean               greeted           = false;
-    private Boolean               seenOff           = false;
-    private List<String>          receivedInfo      = new ArrayList<>();
-    private List<String>          receivedErrors    = new ArrayList<>();
-    private LinkedList<String>    actionsToTake     = new LinkedList<>();
-    private UserSession           userSession       = new ValidUserSession();
-    private Map<String, Response> receivedResponses = new HashMap<>();
+    public void takeNotes(String name, String... notes) {
+        this.notesByTitle.put(name, Arrays.asList(notes));
+    }
+    
+    private Boolean                   greeted           = false;
+    private Boolean                   seenOff           = false;
+    private List<String>              receivedInfo      = new ArrayList<>();
+    private List<String>              receivedErrors    = new ArrayList<>();
+    private LinkedList<String>        actionsToTake     = new LinkedList<>();
+    private UserSession               userSession       = new ValidUserSession();
+    private Map<String, Response>     receivedResponses = new HashMap<>();
+    private Map<String, List<String>> notesByTitle      = new HashMap<>();
 }
