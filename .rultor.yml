@@ -24,6 +24,6 @@ release:
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Pcode-quality -Ppaper --settings /home/r/settings.xml
+    mvn clean deploy -Pcode-quality -Psonatype --settings /home/r/settings.xml
   commanders:
     - aliceice
