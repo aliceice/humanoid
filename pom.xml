@@ -61,7 +61,7 @@
         <versions.build.maven-source-plugin>3.0.1</versions.build.maven-source-plugin>
         <versions.build.maven-surefire-plugin>2.19</versions.build.maven-surefire-plugin>
         <versions.build.nexus-staging-maven-plugin>1.6.8</versions.build.nexus-staging-maven-plugin>
-        <versions.build.versions-maven-plugin>2.1.0</versions.build.versions-maven-plugin>
+        <versions.build.versions-maven-plugin>2.3</versions.build.versions-maven-plugin>
         <versions.dependencies.json>[1.1.0-M1,1.2.0)</versions.dependencies.json>
         <versions.dependencies.junit>5.0.0-M3</versions.dependencies.junit>
         <versions.dependencies.paper>[1.0.0,2.0.0)</versions.dependencies.paper>
