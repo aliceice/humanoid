@@ -7,7 +7,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
-public final class JsonMedia implements Media {
+public final class JsonMedia implements Media<JsonValue> {
     
     @Override
     public void print(String name, String value) {
@@ -31,9 +31,9 @@ public final class JsonMedia implements Media {
     
     @Override
     public void print(String name, Response response) {
-        JsonMedia value = new JsonMedia();
-        response.printOn(value);
-        this.json.add(name, value.getJson());
+        JsonMedia media = new JsonMedia();
+        response.printOn(media);
+        this.json.add(name, media.getContent());
     }
     
     @Override
@@ -42,12 +42,13 @@ public final class JsonMedia implements Media {
         collection.forEach(response -> {
             JsonMedia entry = new JsonMedia();
             response.printOn(entry);
-            arrayBuilder.add(entry.getJson());
+            arrayBuilder.add(entry.getContent());
         });
         this.json.add(name, arrayBuilder.build());
     }
     
-    public JsonValue getJson() {
+    @Override
+    public JsonValue getContent() {
         return this.json.build();
     }
     

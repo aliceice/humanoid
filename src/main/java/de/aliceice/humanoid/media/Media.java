@@ -3,7 +3,7 @@ package de.aliceice.humanoid.media;
 import de.aliceice.humanoid.Response;
 import java.util.Collection;
 
-public interface Media {
+public interface Media<T> {
     
     void print(String name, String value);
     
@@ -16,4 +16,7 @@ public interface Media {
     void print(String name, Response collection);
     
     void print(String name, Collection<Response> collection);
+    
+    T getContent();
+    
 }
