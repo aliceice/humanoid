@@ -14,7 +14,7 @@ public final class InlineAction extends Action {
     }
     
     @Override
-    protected void run(Human human) {
+    public void run(Human human) {
         this.action.accept(human);
     }
     

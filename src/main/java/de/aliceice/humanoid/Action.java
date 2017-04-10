@@ -6,7 +6,7 @@ public abstract class Action {
         return this.name;
     }
     
-    protected abstract void run(Human human);
+    public abstract void run(Human human);
     
     protected Action(String name) {
         this.name = name;
