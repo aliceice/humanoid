@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,6 +49,7 @@ public final class TestHuman implements Human {
     
     @Override
     public void decideWhatToDo(Action... actions) {
+        this.lastActions = Stream.of(actions).map(Action::getName).collect(Collectors.toList());
         Optional.ofNullable(this.actionsToTake.pollFirst())
                 .ifPresent(actionToTake -> {
                     Stream.of(actions)
@@ -85,11 +87,13 @@ public final class TestHuman implements Human {
                              "| Received Info: %s%n" +
                              "| Received Errors: %s%n" +
                              "| Received Responses: %s%n" +
+                             "| Last Actions: %s%n" +
                              "|%n" +
                              "-----------------------%n",
                              this.receivedInfo,
                              this.receivedErrors,
-                             this.receivedResponses);
+                             this.receivedResponses,
+                             this.lastActions);
     }
     
     public TestHuman wasGreeted() {
@@ -137,11 +141,21 @@ public final class TestHuman implements Human {
         this.notesByTitle.put(name, Arrays.asList(notes));
     }
     
+    public TestHuman wasAskedToDecideBetween(String... actions) {
+        Stream.of(actions)
+              .forEach(expected -> {
+                  assertTrue(this.lastActions.stream().anyMatch(expected::equals),
+                             String.format("Did not get action '%s'%n%s", expected, this));
+              });
+        return this;
+    }
+    
     private Boolean                   greeted           = false;
     private Boolean                   seenOff           = false;
     private List<String>              receivedInfo      = new ArrayList<>();
     private List<String>              receivedErrors    = new ArrayList<>();
     private LinkedList<String>        actionsToTake     = new LinkedList<>();
+    private List<String>              lastActions       = new ArrayList<>();
     private UserSession               userSession       = new ValidUserSession();
     private Map<String, Response>     receivedResponses = new HashMap<>();
     private Map<String, List<String>> notesByTitle      = new HashMap<>();

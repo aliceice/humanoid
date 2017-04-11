@@ -61,6 +61,8 @@ public final class TestHumanTest {
         this.subject.ifAskedDo("Increment counter", "Nothing")
                     .decideWhatToDo(actions);
         
+        this.subject.wasAskedToDecideBetween("Increment counter", "Nothing");
+        
         assertEquals(1, counter.get());
         
         this.subject.decideWhatToDo(actions);
