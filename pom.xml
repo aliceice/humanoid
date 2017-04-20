@@ -44,10 +44,6 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <prerequisites>
-        <maven>3.0.0</maven>
-    </prerequisites>
-
     <properties>
         <project.code-quality.dir>${user.dir}/code-quality</project.code-quality.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,7 +60,7 @@
         <versions.build.versions-maven-plugin>2.3</versions.build.versions-maven-plugin>
         <versions.dependencies.json>[1.1.0-M1,1.2.0)</versions.dependencies.json>
         <versions.dependencies.junit>5.0.0-M3</versions.dependencies.junit>
-        <versions.dependencies.paper>[1.0.0,2.0.0)</versions.dependencies.paper>
+        <versions.dependencies.paper>[2.0.0,3.0.0)</versions.dependencies.paper>
         <versions.java>1.8</versions.java>
     </properties>
 

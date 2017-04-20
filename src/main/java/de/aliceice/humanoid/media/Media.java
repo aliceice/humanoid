@@ -7,16 +7,22 @@ public interface Media<T> {
     
     void print(String name, String value);
     
-    void print(String name, Integer value);
-    
-    void print(String name, Float value);
-    
-    void print(String name, Double value);
-    
-    void print(String name, Response collection);
+    void print(String name, Response response);
     
     void print(String name, Collection<Response> collection);
     
     T getContent();
+    
+    default void print(String name, Integer value) {
+        print(name, value.toString());
+    }
+    
+    default void print(String name, Float value) {
+        print(name, value.toString());
+    }
+    
+    default void print(String name, Double value) {
+        print(name, value.toString());
+    }
     
 }
