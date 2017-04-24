@@ -8,6 +8,7 @@ import de.aliceice.paper.ConsolePaper;
 import de.aliceice.paper.Form;
 import de.aliceice.paper.IOStreamConsole;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -82,7 +83,7 @@ public final class ConsoleHuman implements Human {
         do {
             paper.askForInput();
             paper.copyTo(form);
-    
+            
             this.console.println();
             
             if (form.isNotValid()) {
@@ -103,9 +104,21 @@ public final class ConsoleHuman implements Human {
         this(console, new ValidUserSession());
     }
     
+    public ConsoleHuman(UserSession userSession) {
+        this(__ -> userSession);
+    }
+    
+    public ConsoleHuman(Function<Human, UserSession> createUserSession) {
+        this(new IOStreamConsole(), createUserSession);
+    }
+    
     public ConsoleHuman(Console console, UserSession userSession) {
+        this(console, __ -> userSession);
+    }
+    
+    public ConsoleHuman(Console console, Function<Human, UserSession> createUserSession) {
         this.console = console;
-        this.userSession = userSession;
+        this.userSession = createUserSession.apply(this);
     }
     
     private Boolean isNotNumeric(String selection) {

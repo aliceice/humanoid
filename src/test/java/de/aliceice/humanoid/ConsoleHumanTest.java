@@ -1,6 +1,7 @@
 package de.aliceice.humanoid;
 
 import de.aliceice.humanoid.media.Media;
+import de.aliceice.humanoid.sessions.InvalidUserSession;
 import de.aliceice.paper.Field;
 import de.aliceice.paper.Fields;
 import de.aliceice.paper.Form;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(EnglishLocaleExtension.class)
 public final class ConsoleHumanTest {
@@ -143,6 +145,13 @@ public final class ConsoleHumanTest {
         assertEquals(String.format("Information%n%n"), out.toString());
         
         System.setOut(old);
+    }
+    
+    @Test
+    public void canConstructUserSessionFromFunction() throws Exception {
+        ConsoleHuman subject = new ConsoleHuman(new InvalidUserSession());
+        assertThrows(InvalidUserSession.class,
+                     () -> subject.authenticated(() -> {}));
     }
     
     private final TestConsole console = new TestConsole();
