@@ -5,11 +5,27 @@ import java.util.function.Supplier;
 
 public interface Human {
     
+    default void greet(String template, Object... args) {
+        greet(String.format(template, args));
+    }
+    
     void greet(String greeting);
+    
+    default void goodbye(String template, Object... args) {
+        goodbye(String.format(template, args));
+    }
     
     void goodbye(String farewell);
     
+    default void fyi(String template, Object... args) {
+        fyi(String.format(template, args));
+    }
+    
     void fyi(String info);
+    
+    default void anErrorOccurred(String template, Object... args) {
+        anErrorOccurred(String.format(template, args));
+    }
     
     void anErrorOccurred(String error);
     

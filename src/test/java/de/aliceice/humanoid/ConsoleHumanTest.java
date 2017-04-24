@@ -23,25 +23,25 @@ public final class ConsoleHumanTest {
     
     @Test
     public void greet() throws Exception {
-        this.subject.greet("Hello, there!");
+        this.subject.greet("Hello, %s!", "there");
         this.console.hasOutput("%nHello, there!%n%n");
     }
     
     @Test
     public void goodbye() throws Exception {
-        this.subject.goodbye("Farewell");
+        this.subject.goodbye("Fare%s", "well");
         this.console.hasOutput("Farewell%n%n");
     }
     
     @Test
     public void fyi() throws Exception {
-        this.subject.fyi("Information");
+        this.subject.fyi("Infor%s", "mation");
         this.console.hasOutput("Information%n%n");
     }
     
     @Test
     public void anErrorOccurred() throws Exception {
-        this.subject.anErrorOccurred("Error");
+        this.subject.anErrorOccurred("Err%s", "or");
         this.console.hasOutput("An error occurred: Error%n%n");
     }
     
