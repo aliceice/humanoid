@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(EnglishLocaleExtension.class)
@@ -60,7 +59,6 @@ public final class ConsoleHumanTest {
                 media.print("Response Collection",
                             Arrays.asList(new StringResponse("Name 1", "Value"),
                                           new StringResponse("Name 2", "Value")));
-                assertNull(media.getContent());
             }
             
             @Override

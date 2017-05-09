@@ -1,16 +1,14 @@
 package de.aliceice.humanoid;
 
-import de.aliceice.humanoid.media.Media;
+import de.aliceice.humanoid.media.ConsoleMedia;
 import de.aliceice.humanoid.sessions.UserSession;
 import de.aliceice.humanoid.sessions.ValidUserSession;
 import de.aliceice.paper.Console;
 import de.aliceice.paper.ConsolePaper;
 import de.aliceice.paper.Form;
 import de.aliceice.paper.IOStreamConsole;
-import java.util.Collection;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public final class ConsoleHuman implements Human {
@@ -41,10 +39,13 @@ public final class ConsoleHuman implements Human {
     
     @Override
     public void hereYouGo(Response response) {
+        ConsoleMedia media = new ConsoleMedia();
+        response.printOn(media);
+        
         this.console.println("-----------------------");
         this.console.println("| " + response.getName());
         this.console.println("|");
-        response.printOn(new ResponseMedia(this.console));
+        this.console.println(media.getContent());
         this.console.println("-----------------------");
     }
     
@@ -132,36 +133,4 @@ public final class ConsoleHuman implements Human {
     private final Console     console;
     private final UserSession userSession;
     
-    private static final class ResponseMedia implements Media<String> {
-        
-        @Override
-        public void print(String name, String value) {
-            this.console.printf("| %s: %s%n", name, value);
-        }
-        
-        @Override
-        public void print(String name, Response response) {
-            print(name, response.getName());
-        }
-        
-        @Override
-        public void print(String name, Collection<Response> collection) {
-            print(name, collection.stream()
-                                  .map(Response::getName)
-                                  .collect(Collectors.joining(", ",
-                                                              "[ ",
-                                                              " ]")));
-        }
-        
-        @Override
-        public String getContent() {
-            return null;
-        }
-        
-        private ResponseMedia(Console console) {
-            this.console = console;
-        }
-        
-        private final Console console;
-    }
 }
