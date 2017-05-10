@@ -91,16 +91,19 @@ public final class TestHumanTest {
         AtomicBoolean wasSubmitted = new AtomicBoolean();
         Form form = new Form("Test Form",
                              new Fields(new Field("Field 1", new MandatoryRule()),
-                                        new Field("Field 2", new MandatoryRule())));
+                                        new Field("Field 2", new MandatoryRule()),
+                                        new Field("Optional Field")));
         form.onSubmit(fields -> {
             wasSubmitted.set(true);
             assertEquals("Value 1", fields.get("Field 1"));
             assertEquals("Value 2", fields.get("Field 2"));
+            assertEquals("", fields.get("Optional Field"));
         });
         
         this.subject.takeNotes("Test Form",
                                "Field 1: Value 1",
-                               "Field 2: Value 2");
+                               "Field 2: Value 2",
+                               "Optional Field: ");
         this.subject.fillOutAndSubmit(form);
         
         assertTrue(wasSubmitted.get());

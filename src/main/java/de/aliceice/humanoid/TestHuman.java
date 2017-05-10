@@ -73,10 +73,7 @@ public final class TestHuman implements Human {
     public void fillOutAndSubmit(Form form) {
         Optional.ofNullable(this.notesByTitle.get(form.getName()))
                 .orElseThrow(() -> new RuntimeException("I do not have notes for Form: " + form.getName()))
-                .forEach(note -> {
-                    String[] noteElements = note.split(": ");
-                    form.write(noteElements[0], noteElements[1]);
-                });
+                .forEach(note -> note.copyTo(form));
         form.submit();
     }
     
@@ -138,7 +135,7 @@ public final class TestHuman implements Human {
     }
     
     public void takeNotes(String name, String... notes) {
-        this.notesByTitle.put(name, Arrays.asList(notes));
+        this.notesByTitle.put(name, Stream.of(notes).map(Note::new).collect(Collectors.toList()));
     }
     
     public TestHuman wasAskedToDecideBetween(String... actions) {
@@ -150,13 +147,31 @@ public final class TestHuman implements Human {
         return this;
     }
     
-    private Boolean                   greeted           = false;
-    private Boolean                   seenOff           = false;
-    private List<String>              receivedInfo      = new ArrayList<>();
-    private List<String>              receivedErrors    = new ArrayList<>();
-    private LinkedList<String>        actionsToTake     = new LinkedList<>();
-    private List<String>              lastActions       = new ArrayList<>();
-    private UserSession               userSession       = new ValidUserSession();
-    private Map<String, Response>     receivedResponses = new HashMap<>();
-    private Map<String, List<String>> notesByTitle      = new HashMap<>();
+    private Boolean                 greeted           = false;
+    private Boolean                 seenOff           = false;
+    private List<String>            receivedInfo      = new ArrayList<>();
+    private List<String>            receivedErrors    = new ArrayList<>();
+    private LinkedList<String>      actionsToTake     = new LinkedList<>();
+    private List<String>            lastActions       = new ArrayList<>();
+    private UserSession             userSession       = new ValidUserSession();
+    private Map<String, Response>   receivedResponses = new HashMap<>();
+    private Map<String, List<Note>> notesByTitle      = new HashMap<>();
+    
+    private static final class Note {
+        
+        private void copyTo(Form form) {
+            String[] elements = this.note.split(": ");
+            String field = elements[0];
+            String value = elements.length > 1
+                           ? elements[1]
+                           : "";
+            form.write(field, value);
+        }
+        
+        private Note(String note) {
+            this.note = note;
+        }
+        
+        private final String note;
+    }
 }
