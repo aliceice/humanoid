@@ -10,23 +10,8 @@ import javax.json.JsonValue;
 public final class JsonMedia implements Media<JsonValue> {
     
     @Override
-    public void print(String name, String value) {
-        this.json.add(name, value);
-    }
-    
-    @Override
-    public void print(String name, Integer value) {
-        this.json.add(name, value);
-    }
-    
-    @Override
-    public void print(String name, Float value) {
-        this.json.add(name, value);
-    }
-    
-    @Override
-    public void print(String name, Double value) {
-        this.json.add(name, value);
+    public void print(String name, Object value) {
+        this.json.add(name, value.toString());
     }
     
     @Override
@@ -50,6 +35,26 @@ public final class JsonMedia implements Media<JsonValue> {
     @Override
     public JsonValue getContent() {
         return this.json.build();
+    }
+    
+    @Override
+    public void print(String name, Integer value) {
+        this.json.add(name, value);
+    }
+    
+    @Override
+    public void print(String name, Float value) {
+        this.json.add(name, value);
+    }
+    
+    @Override
+    public void print(String name, Double value) {
+        this.json.add(name, value);
+    }
+    
+    @Override
+    public void print(String name, Long value) {
+        this.json.add(name, value);
     }
     
     private final JsonObjectBuilder json = Json.createObjectBuilder();

@@ -53,7 +53,7 @@ public final class ConsoleHumanTest {
             }
             
             @Override
-            public void printOn(Media media) {
+            public void printOn(Media<?> media) {
                 media.print("Field 1", "Value 1");
                 media.print("Response", new StringResponse("Name", "Value"));
                 media.print("Response Collection",

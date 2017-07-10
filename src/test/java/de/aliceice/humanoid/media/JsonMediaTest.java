@@ -33,6 +33,12 @@ public final class JsonMediaTest {
     }
     
     @Test
+    public void printLong() throws Exception {
+        this.subject.print("Field", 1L);
+        assertEquals("{\"Field\":1}", this.subject.getContent().toString());
+    }
+    
+    @Test
     public void printResponse() throws Exception {
         this.subject.print("Field", new StringResponse("Embedded Field", "Value"));
         assertEquals("{\"Field\":{\"Embedded Field\":\"Value\"}}", this.subject.getContent().toString());

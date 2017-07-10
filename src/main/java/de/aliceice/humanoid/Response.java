@@ -8,7 +8,7 @@ public interface Response {
     
     String getName();
     
-    void printOn(Media media);
+    void printOn(Media<?> media);
     
     default void printOn(PrintStream stream) {
         ConsoleMedia media = new ConsoleMedia();

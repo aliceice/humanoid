@@ -28,7 +28,7 @@ public final class ResponseTest {
         }
     
         @Override
-        public void printOn(Media media) {
+        public void printOn(Media<?> media) {
             media.print("Field", "Value");
         }
     };

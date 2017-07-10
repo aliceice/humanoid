@@ -11,7 +11,7 @@ public final class StringResponse implements Response {
     }
     
     @Override
-    public void printOn(Media media) {
+    public void printOn(Media<?> media) {
         media.print(this.name, this.value);
     }
     

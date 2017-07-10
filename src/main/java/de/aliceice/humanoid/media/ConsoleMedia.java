@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public final class ConsoleMedia implements Media<String> {
     
     @Override
-    public void print(String name, String value) {
+    public void print(String name, Object value) {
         this.lines.add(String.format("%s %s: %s", this.prefix, name, value));
     }
     
