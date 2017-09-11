@@ -41,8 +41,8 @@ public final class ConsoleHumanTest {
     
     @Test
     public void anErrorOccurred() throws Exception {
-        this.subject.anErrorOccurred("Err%s", "or");
-        this.console.hasOutput("An error occurred: Error%n%n");
+        this.subject.anErrorOccurred(new Exception(), "Err%s", "or");
+        this.console.hasOutput("Error%n%njava.lang.Exception%n%n");
     }
     
     @Test

@@ -23,6 +23,15 @@ public interface Human {
     
     void fyi(String info);
     
+    default void anErrorOccurred(Exception e, String template, Object... args) {
+        anErrorOccurred(template, args);
+        anErrorOccurred(e);
+    }
+    
+    default void anErrorOccurred(Exception e) {
+        anErrorOccurred(e.toString());
+    }
+    
     default void anErrorOccurred(String template, Object... args) {
         anErrorOccurred(String.format(template, args));
     }

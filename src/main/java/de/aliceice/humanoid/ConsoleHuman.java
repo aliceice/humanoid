@@ -34,7 +34,7 @@ public final class ConsoleHuman implements Human {
     
     @Override
     public void anErrorOccurred(String error) {
-        this.console.printErr(String.format("An error occurred: %s%n%n", error));
+        this.console.printErr(String.format("%s%n%n", error));
     }
     
     @Override
