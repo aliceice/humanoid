@@ -6,7 +6,7 @@
 
     <groupId>de.aliceice</groupId>
     <artifactId>humanoid</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.5</version>
 
     <packaging>bundle</packaging>
 
