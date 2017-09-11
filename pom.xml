@@ -58,7 +58,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <versions.build.findbugs-maven-plugin>3.0.4</versions.build.findbugs-maven-plugin>
         <versions.build.jacoco-maven-plugin>0.7.9</versions.build.jacoco-maven-plugin>
-        <versions.build.junit-surefire-provider>1.0.0-M4</versions.build.junit-surefire-provider>
+        <versions.build.junit-platform>1.0.0</versions.build.junit-platform>
         <versions.build.maven-bundle-plugin>3.0.1</versions.build.maven-bundle-plugin>
         <versions.build.maven-checkstyle-plugin>2.17</versions.build.maven-checkstyle-plugin>
         <versions.build.maven-compiler-plugin>3.6.0</versions.build.maven-compiler-plugin>
@@ -70,8 +70,8 @@
         <versions.build.nexus-staging-maven-plugin>1.6.8</versions.build.nexus-staging-maven-plugin>
         <versions.build.versions-maven-plugin>2.3</versions.build.versions-maven-plugin>
         <versions.dependencies.json>[1.1.0-M1,1.2.0)</versions.dependencies.json>
-        <versions.dependencies.junit>5.0.0-M4</versions.dependencies.junit>
-        <versions.dependencies.paper>[2.3.1,3.0.0)</versions.dependencies.paper>
+        <versions.dependencies.junit>5.0.0</versions.dependencies.junit>
+        <versions.dependencies.paper>[2.6,3.0.0)</versions.dependencies.paper>
         <versions.java>1.8</versions.java>
     </properties>
 
@@ -80,6 +80,11 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
+                <version>${versions.dependencies.junit}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
                 <version>${versions.dependencies.junit}</version>
             </dependency>
             <dependency>
@@ -100,6 +105,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
@@ -205,12 +215,7 @@
                     <dependency>
                         <groupId>org.junit.platform</groupId>
                         <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>${versions.build.junit-surefire-provider}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>${versions.dependencies.junit}</version>
+                        <version>${versions.build.junit-platform}</version>
                     </dependency>
                 </dependencies>
             </plugin>

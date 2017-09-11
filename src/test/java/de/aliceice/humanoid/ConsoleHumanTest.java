@@ -2,6 +2,7 @@ package de.aliceice.humanoid;
 
 import de.aliceice.humanoid.media.Media;
 import de.aliceice.humanoid.sessions.InvalidUserSession;
+import de.aliceice.paper.EnglishLocaleExtension;
 import de.aliceice.paper.Field;
 import de.aliceice.paper.Fields;
 import de.aliceice.paper.Form;
